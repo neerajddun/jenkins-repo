@@ -79,17 +79,18 @@ pipeline {
         stage('Deploy') {
             
             steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
-             sh '''
+                  sh '''
 
-             aws eks update-kubeconfig --name test-cluster --region ap-southeast-1
-             kubectl apply -f deployment.yaml
-             kubectl apply -f service.yaml
+                    aws eks update-kubeconfig --name test-cluster --region ap-southeast-1
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
 
-             '''
+                 '''
+                }
             }
         }
-    }
 
     post {
 
