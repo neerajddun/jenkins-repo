@@ -80,6 +80,8 @@ pipeline {
             steps {
 
              sh '''
+
+             aws eks update-kubeconfig --name test-cluster --region ap-southeast-1
              kubectl apply -f deployment.yaml
              kubectl apply -f service.yaml
 
